@@ -20,7 +20,10 @@ import org.springframework.stereotype.Repository;
 import com.aquent.pizzaorder.dao.IPizzaOrderDao;
 import com.aquent.pizzaorder.model.PizzaOrderDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class PizzaOrderDaoImpl implements IPizzaOrderDao {
 	/*@Value("${systemProperties['source.path']?:'sampl'}")*/
 	private String soursePath;
@@ -36,8 +39,8 @@ public class PizzaOrderDaoImpl implements IPizzaOrderDao {
 	
 	@Override
 	public void loadPizzaOrdersData() {
-		System.out.println("Destination Path ::::::::::::::::::: "+soursePath);
-		System.out.println("Source Path ::::::::::::::::::: "+destinationPath);
+		log.info("Destination Path ::::::::::::::::::: "+soursePath);
+		log.info("Source Path ::::::::::::::::::: "+destinationPath);
 		File file = new File(destinationPath);
 		if(file.exists())
 			file.delete();

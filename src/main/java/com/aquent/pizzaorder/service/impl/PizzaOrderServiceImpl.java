@@ -29,4 +29,8 @@ public class PizzaOrderServiceImpl implements IPizzaOrderService{
 	public void loadPizzaOrdersData() {
 		pizzaOrderDao.loadPizzaOrdersData();
 	}
+	
+	/*public static void main(String[] args) {
+		System.getProperties().keySet().stream().forEach(e->System.out.println(e+":"+System.getProperty(e.toString())));
+	}*/
 }
