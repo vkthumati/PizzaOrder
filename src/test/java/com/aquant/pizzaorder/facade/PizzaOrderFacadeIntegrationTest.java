@@ -19,14 +19,6 @@ public class PizzaOrderFacadeIntegrationTest {
 	private IPizzaOrderFacade pizzaOrderFacade;
 	
 	@Test
-	public void getAllOrders() {
-		Set<PizzaOrderDto> set = pizzaOrderFacade.getAllPizzaOrders();
-		assertTrue(set!=null);
-		assertTrue(!set.isEmpty());
-		assertTrue(set.size()>0);
-	}
-	
-	@Test
 	public void orderPizza() {
 		PizzaOrderDto pizzaOrderDto = pizzaOrderFacade.orderPizza("testPizza");
 		assertTrue(pizzaOrderDto!=null);
@@ -34,4 +26,11 @@ public class PizzaOrderFacadeIntegrationTest {
 		assertTrue(pizzaOrderDto.getName().equals("testPizza"));
 	}
 
+	@Test
+	public void getAllOrders() {
+		Set<PizzaOrderDto> set = pizzaOrderFacade.getAllPizzaOrders();
+		assertTrue(set!=null);
+		assertTrue(!set.isEmpty());
+		assertTrue(set.size()>0);
+	}
 }

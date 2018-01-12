@@ -25,15 +25,16 @@ public class PizzaOrderControllerMockMvcTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void getAllPizzaOrders() throws Exception {
-	    this.mockMvc.perform(get("/api/v1/allOrders")).andDo(print()).andExpect(status().isOk())
-        .andExpect(content().string(containsString("thumati")));
+	public void orderPizza() throws Exception {
+	    this.mockMvc.perform(post("/api/v1/pizzaOrder").content("testPizza").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).
+	    andDo(print()).andExpect(status().isCreated())
+        .andExpect(content().string(containsString("testPizza")));
 	}
 	
 	@Test
-	public void orderPizza() throws Exception {
-	    this.mockMvc.perform(post("/api/v1/pizzaOrder").content("testpizza").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).
-	    andDo(print()).andExpect(status().isCreated())
-        .andExpect(content().string(containsString("testpizza")));
+	public void getAllPizzaOrders() throws Exception {
+	    this.mockMvc.perform(get("/api/v1/allOrders")).andDo(print()).andExpect(status().isOk())
+        .andExpect(content().string(containsString("testPizza")));
 	}
+	
 }
