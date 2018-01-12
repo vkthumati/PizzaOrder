@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath /> 
 	</parent>
 
 	<properties>
@@ -73,39 +73,15 @@
 			<artifactId>wadl-client-plugin</artifactId>
 			<version>1.1.6</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<finalName>pizzaorder</finalName>
-		<!--<directory>${project.basedir}</directory> -->
 		<plugins>
-			
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
-			
-			<!-- <plugin> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> 
-				<executions> <execution> <goals> <goal>repackage</goal> </goals> <configuration> 
-				<classifier>spring-boot</classifier> <mainClass> com.aquant.pizzaorder.PizzaOrderApplication 
-				</mainClass> <file>${project.build.finalName}</file> </configuration> </execution> 
-				</executions> </plugin> -->
-
-			<!-- Make this jar executable -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-				<configuration> <archive> <manifest> <addClasspath>true</addClasspath> <mainClass>com.aquant.pizzaorder.PizzaOrderApplication</mainClass> 
-				<classpathPrefix>dependency-jars/</classpathPrefix> </manifest> </archive> 
-				</configuration> </plugin> -->
-
-			<!-- Copy project dependency -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
-				<version>2.5.1</version> <executions> <execution> <id>copy-dependencies</id> 
-				<phase>package</phase> <goals> <goal>copy-dependencies</goal> </goals> <configuration> 
-				<includeScope>runtime</includeScope> <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory> 
-				</configuration> </execution> </executions> </plugin> -->
-
-
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 
