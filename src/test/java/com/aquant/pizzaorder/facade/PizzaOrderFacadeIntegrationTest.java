@@ -20,10 +20,10 @@ public class PizzaOrderFacadeIntegrationTest {
 	
 	@Test
 	public void orderPizza() {
-		PizzaOrderDto pizzaOrderDto = pizzaOrderFacade.orderPizza("testPizza");
+		PizzaOrderDto pizzaOrderDto = pizzaOrderFacade.orderPizza("testPizza1");
 		assertTrue(pizzaOrderDto!=null);
 		assertTrue(pizzaOrderDto.getName()!=null);
-		assertTrue(pizzaOrderDto.getName().equals("testPizza"));
+		assertTrue(pizzaOrderDto.getName().equals("testPizza1"));
 	}
 
 	@Test

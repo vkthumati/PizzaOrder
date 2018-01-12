@@ -13,7 +13,8 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import com.aquant.pizzaorder.dao.IPizzaOrderDao;
@@ -21,21 +22,28 @@ import com.aquant.pizzaorder.model.PizzaOrderDto;
 
 @Repository
 public class PizzaOrderDaoImpl implements IPizzaOrderDao {
-	@Value("${source.path}")
+	/*@Value("${systemProperties['source.path']?:'sampl'}")
 	private String soursePath;
 	
-	@Value("${destination.path}")
-	private String destinationPath;
+	@Value("${systemProperties['destination.path']?:'sample'}")
+	private String destinationPath;*/
+	
+	@Autowired
+	private Environment env;
 	
 	@Override
 	public void loadPizzaOrdersData() {
-		File file = new File(destinationPath);
+		File file = new File(env.getProperty("destination.path"));
+		if(file.exists())
+			file.delete();
 		try (	
 				FileWriter fw = new FileWriter(file, true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out =  new PrintWriter(bw);
-				Stream<String> lines = Files.lines(Paths.get(soursePath))
+				Stream<String> lines = Files.lines(Paths.get(env.getProperty("source.path")))
 			) {
+			file.createNewFile();
+			
 			Set<PizzaOrderDto> pizzaOrders = lines.map(line -> {
 				  String orderDetails[] = line.split(",");
 				  return new PizzaOrderDto(orderDetails[0], Long.valueOf(orderDetails[1]));
@@ -53,13 +61,9 @@ public class PizzaOrderDaoImpl implements IPizzaOrderDao {
 	@Override
 	public Set<PizzaOrderDto> getAllPizzaOrders() {
 		//Files.lines(Paths.get(getClass().getClassLoader().getResource("pizzaorders.txt").toURI()), StandardCharsets.UTF_8)
-		File file = new File(destinationPath);
 		Set<PizzaOrderDto> pizzaOrders=null;
 		try (
-				FileWriter fw = new FileWriter(file, true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter out =  new PrintWriter(bw);
-				Stream<String> lines = Files.lines(Paths.get(destinationPath))
+				Stream<String> lines = Files.lines(Paths.get(env.getProperty("destination.path")))
 			) {
 				pizzaOrders = lines.map(line -> {
 				  String orderDetails[] = line.split(",");
@@ -73,18 +77,15 @@ public class PizzaOrderDaoImpl implements IPizzaOrderDao {
 	
 	@Override
 	public PizzaOrderDto orderPizza(String name) {
-		File file = null;
-		FileWriter fw = null;
-		BufferedWriter bw = null;
-		PrintWriter out = null;
+		//file = new File(getClass().getClassLoader().getResource("pizzaorders.txt").toURI().getPath());
+		File file = new File(env.getProperty("destination.path"));
 		PizzaOrderDto pizzaOrderDto = null;
-		try {
+		try (
+				FileWriter fw = new FileWriter(file, true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out =  new PrintWriter(bw);
+			){
 			pizzaOrderDto = new PizzaOrderDto(name, Instant.now().toEpochMilli());
-			//file = new File(getClass().getClassLoader().getResource("pizzaorders.txt").toURI().getPath());
-			file = new File(destinationPath);
-		    fw = new FileWriter(file, true);
-		    bw = new BufferedWriter(fw);
-		    out = new PrintWriter(bw);
 		    out.println(pizzaOrderDto.getName()+","+pizzaOrderDto.getTime());
 		    out.flush();
 		} catch (IOException e) {

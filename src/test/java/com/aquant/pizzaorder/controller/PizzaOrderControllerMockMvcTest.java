@@ -23,7 +23,7 @@ public class PizzaOrderControllerMockMvcTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
+	
 	@Test
 	public void orderPizza() throws Exception {
 	    this.mockMvc.perform(post("/api/v1/pizzaOrder").content("testPizza").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).
@@ -34,7 +34,7 @@ public class PizzaOrderControllerMockMvcTest {
 	@Test
 	public void getAllPizzaOrders() throws Exception {
 	    this.mockMvc.perform(get("/api/v1/allOrders")).andDo(print()).andExpect(status().isOk())
-        .andExpect(content().string(containsString("testPizza")));
+        .andExpect(content().string(containsString("meat")));
 	}
 	
 }
