@@ -2,7 +2,9 @@ package com.aquent.pizzaorder.exceptionresolvers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,15 +25,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.jsf.DelegatingPhaseListenerMulticaster;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.aquent.pizzaorder.exceptions.ApplicationException;
 import com.aquent.pizzaorder.exceptions.ErrorResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configurable
 @EnableWebMvc
 @RestControllerAdvice
+@Slf4j
 public class PizzaOrderExceptionResolver extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(Throwable.class)
@@ -55,15 +61,17 @@ public class PizzaOrderExceptionResolver extends ResponseEntityExceptionHandler 
             status = errorResponse.getStatus();
         }
 
-		Object response = null;
 		if (errorResponse != null) {
-			response = errorResponse;
-			System.out.println("[" + req.getMethod() + "::" + req.getContextPath() + "]   ErrorResponse: HttpStatus["
+			String deatils = "[" + req.getMethod() + "::" + req.getContextPath() + "]   ErrorResponse: HttpStatus["
 					+ errorResponse.getStatus() + "]  code[" + errorResponse.getErrorCode() + "]  message[" + errorResponse.getErrorMessage() + "]   timestamp["
-					+ errorResponse.getTimestamp() + "]");
-			System.out.println(req.getParameterNames() + "  xxxx  " + req.getParameterMap());
+					+ errorResponse.getTimestamp() + "] requestParams["+req.getParameterNames() + "  xxxx  " + req.getParameterMap()+"]";
+			Map<String, Object> detailsMap = new HashMap<>();
+			detailsMap.put("details", deatils);
+			errorResponse.setDetails(detailsMap);
+			log.info(deatils);
+			log.info(req.getParameterNames() + "  xxxx  " + req.getParameterMap());
 		} 
-		return new ResponseEntity<Object>(response, status);
+		return new ResponseEntity<Object>(errorResponse, status);
 	}	 
 	
 	@Override

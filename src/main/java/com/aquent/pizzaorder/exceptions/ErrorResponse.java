@@ -4,18 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -24,57 +14,28 @@ import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-	"id",
-	"timestamp",
-    "errorMessage",
-    "errorCode",
-    "type",
-    "validationMessages",
-    "detailMap"
-})
-/**
- * Represents an error message that will be sent back to a client formatted in either XML or JSON.
- * Please note:
- * The HttpStatus member is not output in the final message structure.  It is used to set the HTTP status code in the response to the client.
- */
-@XmlRootElement(name = "errorResponse")
-@XmlSeeAlso({ArrayList.class,HashMap.class,HashSet.class})
 public class ErrorResponse {
-	@XmlElement(name = "errorMessage", required = true)
 	private String errorMessage;
 	
-	@XmlElement(name = "validationMessages", required = false)
 	private List<String> validationMessages = new ArrayList<>();
 	
-	@XmlElement(name = "errorCode", required = true)
 	private String errorCode;
 	
-	@XmlElement(name = "timestamp", required = true)
 	private long timestamp = (new Date()).getTime();
 	
-	@XmlElement(name = "type")
 	private String type;
 	
-	@XmlElement(name = "id")
 	private String id;
-	
-	@XmlElement(name="detailMap")
+
 	private Map<String,Object> detailMap;
 	
-	@XmlTransient
     private HttpStatus status;
 	
-	@XmlTransient
     private HttpHeaders headers = new HttpHeaders();
 	
-	@XmlTransient
     private Throwable cause;
 	
 	private List<String> errors;
-
 
 	public ErrorResponse(List<String> errors) {
 		this();
