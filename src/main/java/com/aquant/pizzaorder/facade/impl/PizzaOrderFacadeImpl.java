@@ -23,4 +23,9 @@ public class PizzaOrderFacadeImpl implements IPizzaOrderFacade{
 	public PizzaOrderDto orderPizza(String name) {
 		return pizzaOrderService.orderPizza(name);
 	}
+	
+	@Override
+	public void loadPizzaOrdersData() {
+		pizzaOrderService.loadPizzaOrdersData();
+	}
 }

@@ -6,6 +6,6 @@ import com.aquant.pizzaorder.model.PizzaOrderDto;
 
 public interface IPizzaOrderDao {
 	Set<PizzaOrderDto> getAllPizzaOrders();
-	
 	PizzaOrderDto orderPizza(String name);
+	void loadPizzaOrdersData();
 }

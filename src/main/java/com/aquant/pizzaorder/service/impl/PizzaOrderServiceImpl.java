@@ -24,4 +24,9 @@ public class PizzaOrderServiceImpl implements IPizzaOrderService{
 	public PizzaOrderDto orderPizza(String name) {
 		return pizzaOrderDao.orderPizza(name);
 	}
+	
+	@Override
+	public void loadPizzaOrdersData() {
+		pizzaOrderDao.loadPizzaOrdersData();
+	}
 }
