@@ -1,6 +1,6 @@
 # PizzaOrder
 
-##Maven Commands
+## Maven Commands
 ```
 mvn clean
 ```
